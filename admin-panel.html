@@ -7,48 +7,21 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-theme">
-  <header style="text-align:center; padding:20px;">
-    <h1 class="logo">🎬 Painel de Administração</h1>
-    <p>Gerencie usuários e acessos</p>
-  </header>
-
-  <main class="admin-container">
-    <!-- Login Admin -->
-    <section id="admin-login-section">
-      <h2>Acesso Administrador</h2>
-      <form id="admin-login-form">
-        <input type="email" id="admin-email" placeholder="E-mail" required>
-        <input type="password" id="admin-password" placeholder="Senha" required>
-        <button type="submit" class="btn">Entrar</button>
+  <section id="admin-panel" class="page active">
+    <div class="admin-container">
+      <h2>Painel de Administração</h2>
+      <form id="add-user-form">
+        <input type="text" id="new-username" placeholder="Novo Usuário" required>
+        <input type="password" id="new-password" placeholder="Senha" required>
+        <button type="submit" class="btn">Adicionar Usuário</button>
       </form>
-    </section>
-
-    <!-- Conteúdo Admin -->
-    <section id="admin-content" style="display:none;">
-      <!-- Gerenciar Usuários -->
-      <div class="admin-section">
-        <h3>👤 Gerenciar Usuários</h3>
-        <form id="add-user-form">
-          <input type="text" id="new-username" placeholder="Novo Usuário" required>
-          <input type="password" id="new-password" placeholder="Nova Senha" required>
-          <button type="submit" class="btn">Adicionar</button>
-        </form>
-        <ul id="user-list" style="margin-top:15px;"></ul>
-      </div>
-
-      <!-- Criar Teste -->
-      <div class="admin-section">
-        <h3>🕒 Criar Teste Gratuito (1h)</h3>
-        <form id="create-trial-form">
-          <input type="text" id="trial-username" placeholder="Usuário para teste" required>
-          <button type="submit" class="btn">Gerar Teste</button>
-        </form>
-      </div>
-
-      <button id="logout-btn" class="btn btn-secondary">🚪 Sair do Painel</button>
-    </section>
-  </main>
-
+      <form id="create-trial-form">
+        <input type="text" id="trial-username" placeholder="Usuário para teste" required>
+        <button type="submit" class="btn">Criar Teste de 1h</button>
+      </form>
+      <ul id="user-list"></ul>
+    </div>
+  </section>
   <script src="script.js"></script>
 </body>
 </html>
