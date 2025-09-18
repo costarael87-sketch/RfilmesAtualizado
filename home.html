@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>R Filmes - Área do Cliente</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+  <div class="home-container">
+    <h1>🎬 Bem-vindo ao R Filmes</h1>
+    <p>Seu acesso está ativo. Clique abaixo para assistir:</p>
+    <button id="acessarBtn">Acessar Conteúdo</button>
+    <br><br>
+    <button onclick="logout()">Sair</button>
+  </div>
+
+  <script>
+    const urlConteudo = localStorage.getItem("urlConteudo");
+
+    const btn = document.getElementById("acessarBtn");
+    btn.addEventListener("click", () => {
+      if (urlConteudo) {
+        window.open(urlConteudo, "_blank");
+      } else {
+        alert("Nenhuma URL encontrada. Contate o administrador.");
+      }
+    });
+
+    function logout() {
+      localStorage.removeItem("urlConteudo");
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>

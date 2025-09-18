@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>R Filmes - Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+  <div class="login-container">
+    <h1 class="logo">🎬 R Filmes</h1>
+    <h2>Bem-vindo</h2>
+
+    <!-- Login Cliente -->
+    <h3>Acesso Cliente</h3>
+    <input id="user" type="text" placeholder="Usuário">
+    <input id="pass" type="password" placeholder="Senha">
+    <button onclick="loginUser()">Entrar</button>
+
+    <hr style="margin:20px 0;">
+
+    <!-- Login Admin -->
+    <h3>Acesso Administrador</h3>
+    <input id="adminEmail" type="email" placeholder="E-mail Admin">
+    <input id="adminPass" type="password" placeholder="Senha Admin">
+    <button onclick="loginAdmin()">Entrar Admin</button>
+  </div>
+
+  <script>
+    const firebaseUrl = "https://rrfilmes-fad2a-default-rtdb.firebaseio.com/usuarios";
+
+    async function loginUser() {
+      const u = document.getElementById("user").value;
+      const p = document.getElementById("pass").value;
+
+      if (!u || !p) {
+        alert("Preencha usuário e senha!");
+        return;
+      }
+
+      const res = await fetch(`${firebaseUrl}/${u}.json`);
+      const data = await res.json();
+
+      if (!data) {
+        alert("Usuário não encontrado!");
+        return;
+      }
+
+      if (data.senha !== p) {
+        alert("Senha incorreta!");
+        return;
+      }
+
+      if (data.status === "bloqueado") {
+        alert("Usuário bloqueado!");
+        return;
+      }
+
+      const agora = new Date();
+      const expira = new Date(data.expira);
+
+      if (agora > expira) {
+        alert("Acesso expirado!");
+        return;
+      }
+
+      // Salva URL do usuário para usar no home
+      localStorage.setItem("urlConteudo", data.url);
+      alert("Login bem-sucedido!");
+      window.location.href = "home.html";
+    }
+
+    function loginAdmin() {
+      const email = document.getElementById("adminEmail").value;
+      const senha = document.getElementById("adminPass").value;
+
+      if (email === "costarael87@gmail.com" && senha === "1206israel") {
+        alert("Login Admin OK!");
+        window.location.href = "admin-panel.html";
+      } else {
+        alert("Credenciais inválidas de Admin!");
+      }
+    }
+  </script>
+</body>
+</html>

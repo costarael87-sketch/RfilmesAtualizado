@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Painel de Administração - R Filmes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+  <div class="admin-container">
+    <h2>🎬 Painel de Administração</h2>
+
+    <h3>Criar Usuário (30 dias)</h3>
+    <input id="newUser" type="text" placeholder="Usuário">
+    <input id="newPass" type="password" placeholder="Senha">
+    <input id="newUrl" type="text" placeholder="URL do Conteúdo">
+    <button onclick="criarUsuario()">Adicionar Usuário</button>
+
+    <hr>
+
+    <h3>Criar Teste Grátis (1h)</h3>
+    <input id="trialUser" type="text" placeholder="Usuário para teste">
+    <input id="trialPass" type="password" placeholder="Senha para teste">
+    <input id="trialUrl" type="text" placeholder="URL do Conteúdo">
+    <button onclick="criarTeste()">Criar Teste</button>
+
+    <hr>
+
+    <h3>Usuários Cadastrados</h3>
+    <ul id="userList" class="user-list"></ul>
+
+    <br>
+    <button onclick="sair()">Sair</button>
+  </div>
+
+  <script>
+    const firebaseUrl = "https://rrfilmes-fad2a-default-rtdb.firebaseio.com/usuarios";
+
+    async function criarUsuario() {
+      const u = document.getElementById("newUser").value;
+      const p = document.getElementById("newPass").value;
+      const url = document.getElementById("newUrl").value;
+      if (!u || !p || !url) { alert("Preencha todos os campos!"); return; }
+      const expira = new Date(Date.now() + 30*24*60*60*1000);
+      await fetch(`${firebaseUrl}/${u}.json`, {
+        method: "PUT",
+        body: JSON.stringify({ senha: p, url: url, status: "liberado", expira: expira.toISOString() })
+      });
+      alert("Usuário criado com sucesso!"); listarUsuarios();
+    }
+
+    async function criarTeste() {
+      const u = document.getElementById("trialUser").value;
+      const p = document.getElementById("trialPass").value;
+      const url = document.getElementById("trialUrl").value;
+      if (!u || !p || !url) { alert("Preencha todos os campos!"); return; }
+      const expira = new Date(Date.now() + 60*60*1000);
+      await fetch(`${firebaseUrl}/${u}.json`, {
+        method: "PUT",
+        body: JSON.stringify({ senha: p, url: url, status: "liberado", expira: expira.toISOString() })
+      });
+      alert("Teste de 1h criado!"); listarUsuarios();
+    }
+
+    async function listarUsuarios() {
+      const res = await fetch(`${firebaseUrl}.json`);
+      const data = await res.json();
+      const list = document.getElementById("userList");
+      list.innerHTML = "";
+      if (data) {
+        Object.keys(data).forEach(u => {
+          const user = data[u];
+          let status = user.status;
+          let tempo = "N/A";
+          if (user.expira) {
+            const expira = new Date(user.expira);
+            const agora = new Date();
+            if (expira > agora) {
+              const diff = Math.floor((expira - agora) / (1000*60));
+              tempo = diff + " min restantes";
+            } else { status = "expirado"; }
+          }
+          const li = document.createElement("li");
+          li.innerHTML = `<span><b>${u}</b> - ${status} - expira: ${tempo}</span>
+            <div>
+              <button onclick="liberar('${u}')">Liberar</button>
+              <button onclick="bloquear('${u}')">Bloquear</button>
+              <button onclick="excluir('${u}')">Excluir</button>
+            </div>`;
+          list.appendChild(li);
+        });
+      }
+    }
+
+    async function liberar(u) { await fetch(`${firebaseUrl}/${u}/status.json`, { method:"PUT", body: JSON.stringify("liberado") }); listarUsuarios(); }
+    async function bloquear(u) { await fetch(`${firebaseUrl}/${u}/status.json`, { method:"PUT", body: JSON.stringify("bloqueado") }); listarUsuarios(); }
+    async function excluir(u) { await fetch(`${firebaseUrl}/${u}.json`, { method:"DELETE" }); listarUsuarios(); }
+
+    function sair() { window.location.href = "index.html"; }
+
+    listarUsuarios();
+  </script>
+</body>
+</html>

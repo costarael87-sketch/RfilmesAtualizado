@@ -1,0 +1,17 @@
+/* Reset */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif; }
+body { background-color: #0d0d0d; color: #f3f3f3; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+.login-container, .admin-container, .home-container { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 30px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 8px 30px rgba(0,0,0,0.5); }
+.logo { font-size: 2.2em; font-weight: 700; margin-bottom: 20px; color: #ff0044; }
+h1,h2,h3 { margin-bottom: 15px; }
+hr { border: 0; height: 1px; background: rgba(255,255,255,0.2); margin: 20px 0; }
+input { width: 100%; padding: 12px; margin: 8px 0 16px 0; border: none; border-radius: 6px; font-size: 15px; background: rgba(255,255,255,0.1); color: #fff; }
+input::placeholder { color: #bbb; }
+button { width: 100%; padding: 12px; margin-top: 10px; border: none; border-radius: 6px; background: #ff0044; color: white; font-weight: 600; cursor: pointer; transition: 0.3s; }
+button:hover { background: #ff3366; }
+.home-container p { margin: 15px 0; }
+.admin-container { max-width: 600px; }
+.admin-container h2 { margin-bottom: 25px; }
+.user-list { list-style: none; margin-top: 20px; padding: 0; }
+.user-list li { background: rgba(255,255,255,0.08); padding: 12px; border-radius: 6px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+.user-list button { width: auto; padding: 6px 12px; margin-left: 6px; font-size: 14px; }
