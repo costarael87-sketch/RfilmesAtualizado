@@ -13,9 +13,8 @@
     <section class="card">
       <h3>Criar Usuário (30 dias)</h3>
       <form id="formAddUser">
-        <input type="text" id="new-username" placeholder="Usuário (ex: cliente1)" required>
+        <input type="text" id="new-username" placeholder="Usuário" required>
         <input type="password" id="new-password" placeholder="Senha" required>
-        <input type="text" id="new-url" placeholder="URL do Conteúdo (opcional)">
         <button type="submit" class="btn">Adicionar (30 dias)</button>
       </form>
     </section>
@@ -23,9 +22,8 @@
     <section class="card">
       <h3>Teste Grátis (1 hora)</h3>
       <form id="formTrial">
-        <input type="text" id="trial-username" placeholder="Usuário para teste" required>
-        <input type="password" id="trial-password" placeholder="Senha para teste" required>
-        <input type="text" id="trial-url" placeholder="URL do Conteúdo (opcional)">
+        <input type="text" id="trial-username" placeholder="Usuário de teste" required>
+        <input type="password" id="trial-password" placeholder="Senha de teste" required>
         <button type="submit" class="btn">Criar Teste 1h</button>
       </form>
     </section>
@@ -36,7 +34,7 @@
     </section>
 
     <div style="text-align:center; margin-top:16px;">
-      <button id="btn-logout" class="btn btn-secondary" onclick="logout()">Sair</button>
+      <button class="btn btn-secondary" onclick="logout()">Sair</button>
     </div>
   </div>
 
