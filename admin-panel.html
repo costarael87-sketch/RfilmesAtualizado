@@ -1,27 +1,45 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Painel Admin - R Filmes</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-theme">
-  <section id="admin-panel" class="page active">
-    <div class="admin-container">
-      <h2>Painel de Administração</h2>
-      <form id="add-user-form">
-        <input type="text" id="new-username" placeholder="Novo Usuário" required>
+  <div class="admin-container">
+    <h1>⚙️ Painel de Administração</h1>
+
+    <section class="card">
+      <h3>Criar Usuário (30 dias)</h3>
+      <form id="formAddUser">
+        <input type="text" id="new-username" placeholder="Usuário (ex: cliente1)" required>
         <input type="password" id="new-password" placeholder="Senha" required>
-        <button type="submit" class="btn">Adicionar Usuário</button>
+        <input type="text" id="new-url" placeholder="URL do Conteúdo (opcional)">
+        <button type="submit" class="btn">Adicionar (30 dias)</button>
       </form>
-      <form id="create-trial-form">
+    </section>
+
+    <section class="card">
+      <h3>Teste Grátis (1 hora)</h3>
+      <form id="formTrial">
         <input type="text" id="trial-username" placeholder="Usuário para teste" required>
-        <button type="submit" class="btn">Criar Teste de 1h</button>
+        <input type="password" id="trial-password" placeholder="Senha para teste" required>
+        <input type="text" id="trial-url" placeholder="URL do Conteúdo (opcional)">
+        <button type="submit" class="btn">Criar Teste 1h</button>
       </form>
-      <ul id="user-list"></ul>
+    </section>
+
+    <section class="card">
+      <h3>Usuários Cadastrados</h3>
+      <ul id="user-list" class="user-list"></ul>
+    </section>
+
+    <div style="text-align:center; margin-top:16px;">
+      <button id="btn-logout" class="btn btn-secondary" onclick="logout()">Sair</button>
     </div>
-  </section>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>

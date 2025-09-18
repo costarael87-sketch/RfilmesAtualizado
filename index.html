@@ -7,20 +7,26 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-theme">
-  <main id="login-screen" class="active">
+  <main id="login-screen">
     <div class="login-container">
       <h1 class="logo">🎬 R Filmes</h1>
+      <h2 class="welcome-message">Bem-vindo</h2>
+
+      <!-- Login Usuário -->
       <form id="login-form">
         <input type="text" id="username" placeholder="Usuário" required>
         <input type="password" id="password" placeholder="Senha" required>
         <button type="submit" class="btn">Entrar</button>
       </form>
-      <form id="admin-login-form">
+
+      <!-- Login Admin -->
+      <form id="admin-login-form" style="margin-top:20px;">
         <input type="email" id="admin-email" placeholder="E-mail Admin" required>
         <input type="password" id="admin-password" placeholder="Senha Admin" required>
-        <button type="submit" class="btn btn-secondary">Entrar como Admin</button>
+        <button type="submit" class="btn btn-secondary">Login Admin</button>
       </form>
-      <a href="https://wa.me/5583988942232" target="_blank" class="btn">📱 Solicitar Acesso</a>
+
+      <a href="https://wa.me/5583988942232" target="_blank" class="btn" style="margin-top:20px;display:inline-block;">📱 Solicitar Acesso</a>
     </div>
   </main>
   <script src="script.js"></script>
