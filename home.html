@@ -1,39 +1,35 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>R Filmes - Home</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-theme">
-  <header class="site-header">
-    <h1>R Filmes</h1>
-    <button class="btn btn-secondary" onclick="logout()">Sair</button>
+  <header>
+    <h1 class="logo">🎬 R Filmes</h1>
   </header>
-
   <main class="content-container">
-    <section id="movies-section" class="media-section">
+    <section id="movies">
       <h2>Filmes</h2>
-      <div class="media-grid" id="filmes-grid"></div>
+      <div class="media-grid" id="movies-list"></div>
     </section>
-    <section id="series-section" class="media-section">
+    <section id="series">
       <h2>Séries</h2>
-      <div class="media-grid" id="series-grid"></div>
+      <div class="media-grid" id="series-list"></div>
     </section>
-    <section id="animes-section" class="media-section">
+    <section id="animes">
       <h2>Animes</h2>
-      <div class="media-grid" id="animes-grid"></div>
+      <div class="media-grid" id="animes-list"></div>
     </section>
   </main>
-
   <div id="video-player-overlay" class="player-overlay">
     <div class="player-container">
       <button class="close-btn" onclick="closePlayer()">X</button>
       <iframe id="video-player" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     </div>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>

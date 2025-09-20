@@ -1,34 +1,29 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>R Filmes - Login</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-theme">
-  <main id="login-screen">
-    <div class="login-container">
-      <h1 class="logo">R Filmes</h1>
-      <h2 class="welcome-message">Bem-vindo</h2>
+  <div class="login-container">
+    <h1 class="logo">🎬 R Filmes</h1>
+    <form id="login-form">
+      <input type="text" id="username" placeholder="Usuário" required>
+      <input type="password" id="password" placeholder="Senha" required>
+      <button type="submit" class="btn">Entrar</button>
+    </form>
 
-      <!-- Login Usuário -->
-      <form id="login-form">
-        <input type="text" id="username" placeholder="Usuário" required>
-        <input type="password" id="password" placeholder="Senha" required>
-        <button type="submit" class="btn">Entrar</button>
-      </form>
+    <form id="admin-login-form">
+      <input type="email" id="admin-email" placeholder="E-mail Admin" required>
+      <input type="password" id="admin-password" placeholder="Senha Admin" required>
+      <button type="submit" class="btn btn-secondary">Entrar ADM</button>
+    </form>
 
-      <!-- Login Admin -->
-      <form id="admin-login-form" style="margin-top:18px;">
-        <input type="email" id="admin-email" placeholder="E-mail Admin" required>
-        <input type="password" id="admin-password" placeholder="Senha Admin" required>
-        <button type="submit" class="btn btn-secondary">Entrar como Admin</button>
-      </form>
+    <a href="https://wa.me/5583988942232?text=Olá!+Quero+acesso+ao+R+Filmes" class="btn btn-whatsapp" target="_blank">📲 Solicitar acesso no WhatsApp</a>
+  </div>
 
-      <a href="https://wa.me/5583988942232?text=Ol%C3%A1,+gostaria+de+solicitar+acesso" target="_blank" class="btn" style="margin-top:18px; display:inline-block;">📱 Solicitar Acesso</a>
-    </div>
-  </main>
   <script src="script.js"></script>
 </body>
 </html>

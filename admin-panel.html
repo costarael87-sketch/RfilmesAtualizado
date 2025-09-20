@@ -1,43 +1,31 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Painel Admin - R Filmes</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Administrativo - R Filmes</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-theme">
   <div class="admin-container">
-    <h1>⚙️ Painel de Administração</h1>
+    <h1>Painel Administrativo</h1>
+    <form id="add-user-form">
+      <input type="text" id="new-username" placeholder="Novo Usuário" required>
+      <input type="password" id="new-password" placeholder="Nova Senha" required>
+      <button type="submit" class="btn">Adicionar Usuário (30 dias)</button>
+    </form>
 
-    <section class="card">
-      <h3>Criar Usuário (30 dias)</h3>
-      <form id="formAddUser">
-        <input type="text" id="new-username" placeholder="Usuário" required>
-        <input type="password" id="new-password" placeholder="Senha" required>
-        <button type="submit" class="btn">Adicionar (30 dias)</button>
-      </form>
-    </section>
+    <form id="create-trial-form">
+      <input type="text" id="trial-username" placeholder="Usuário Teste" required>
+      <input type="password" id="trial-password" placeholder="Senha Teste" required>
+      <button type="submit" class="btn btn-secondary">Criar Teste 1h</button>
+    </form>
 
-    <section class="card">
-      <h3>Teste Grátis (1 hora)</h3>
-      <form id="formTrial">
-        <input type="text" id="trial-username" placeholder="Usuário de teste" required>
-        <input type="password" id="trial-password" placeholder="Senha de teste" required>
-        <button type="submit" class="btn">Criar Teste 1h</button>
-      </form>
-    </section>
+    <h2>Usuários Cadastrados</h2>
+    <ul id="user-list"></ul>
 
-    <section class="card">
-      <h3>Usuários Cadastrados</h3>
-      <ul id="user-list" class="user-list"></ul>
-    </section>
-
-    <div style="text-align:center; margin-top:16px;">
-      <button class="btn btn-secondary" onclick="logout()">Sair</button>
-    </div>
+    <button onclick="window.location.href='index.html'" class="btn btn-secondary">Sair</button>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>

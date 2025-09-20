@@ -1,102 +1,98 @@
-document.addEventListener('DOMContentLoaded',()=>{
-  const loginForm=document.getElementById('login-form');
-  const adminForm=document.getElementById('admin-login-form');
-  let users=JSON.parse(localStorage.getItem('users')||'[]');
+let users = [];
+let loggedInUser = null;
 
-  function saveUsers(){localStorage.setItem('users',JSON.stringify(users));}
-  function now(){return new Date().getTime();}
+document.addEventListener('DOMContentLoaded', () => {
+  const loginForm = document.getElementById('login-form');
+  const adminLoginForm = document.getElementById('admin-login-form');
+  const addUserForm = document.getElementById('add-user-form');
+  const createTrialForm = document.getElementById('create-trial-form');
+  const userList = document.getElementById('user-list');
 
-  // LOGIN USER
+  // Login usuário
   if(loginForm){
-    loginForm.addEventListener('submit',e=>{
+    loginForm.addEventListener('submit', e => {
       e.preventDefault();
-      let u=document.getElementById('username').value;
-      let p=document.getElementById('password').value;
-      let user=users.find(x=>x.username===u&&x.password===p);
-      if(!user){alert('Usuário não encontrado');return;}
-      if(user.expires && now()>user.expires){user.status='bloqueado';saveUsers();alert('Acesso expirado');return;}
-      if(user.status==='bloqueado'){alert('Usuário bloqueado');return;}
-      localStorage.setItem('loggedUser',u);
-      window.location.href='home.html';
+      const u = document.getElementById('username').value;
+      const p = document.getElementById('password').value;
+      const user = users.find(x=>x.username===u && x.password===p);
+      if(user && user.status==='liberado'){
+        window.location.href='home.html';
+      } else {
+        alert('Usuário inválido ou bloqueado.');
+      }
     });
   }
 
-  // LOGIN ADMIN
-  if(adminForm){
-    adminForm.addEventListener('submit',e=>{
+  // Login admin
+  if(adminLoginForm){
+    adminLoginForm.addEventListener('submit', e => {
       e.preventDefault();
-      let eMail=document.getElementById('admin-email').value;
-      let pass=document.getElementById('admin-password').value;
-      if(eMail==='costarael87@gmail.com'&&pass==='1206israel'){
+      const email = document.getElementById('admin-email').value;
+      const pass = document.getElementById('admin-password').value;
+      if(email==='costarael87@gmail.com' && pass==='1206israel'){
         window.location.href='admin-panel.html';
-      } else alert('Credenciais inválidas');
+      } else {
+        alert('Admin inválido.');
+      }
     });
   }
 
-  // ADMIN PANEL
-  const formAdd=document.getElementById('formAddUser');
-  const formTrial=document.getElementById('formTrial');
-  const userList=document.getElementById('user-list');
+  // Painel admin: adicionar usuário
+  if(addUserForm){
+    addUserForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const u = document.getElementById('new-username').value;
+      const p = document.getElementById('new-password').value;
+      const exp = new Date(Date.now()+30*24*60*60*1000);
+      users.push({id:Date.now(),username:u,password:p,status:'liberado',expires:exp});
+      renderUsers();
+    });
+  }
+
+  // Criar teste
+  if(createTrialForm){
+    createTrialForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const u = document.getElementById('trial-username').value;
+      const p = document.getElementById('trial-password').value;
+      const exp = new Date(Date.now()+60*60*1000);
+      users.push({id:Date.now(),username:u,password:p,status:'liberado',expires:exp});
+      renderUsers();
+    });
+  }
 
   function renderUsers(){
     if(!userList) return;
     userList.innerHTML='';
-    users.forEach(u=>{
+    users.forEach(user=>{
       let li=document.createElement('li');
-      let left=`${u.username} (${u.status})`;
-      if(u.expires){let diff=u.expires-now();if(diff>0){let d=Math.floor(diff/86400000);let h=Math.floor((diff%86400000)/3600000);left+=` - expira em ${d}d ${h}h`;} else {u.status='bloqueado';}}
-      li.innerHTML=`<span>${left}</span>
-      <div>
-        <button onclick="toggleUser('${u.username}','liberar')" class='btn-secondary'>Liberar</button>
-        <button onclick="toggleUser('${u.username}','bloquear')" class='btn-secondary'>Bloquear</button>
-        <button onclick="toggleUser('${u.username}','excluir')" class='btn-secondary'>Excluir</button>
-      </div>`;
+      let timeLeft='';
+      if(user.expires){
+        let diff=user.expires-new Date();
+        if(diff<=0){user.status='bloqueado'; timeLeft='Expirado';}
+        else timeLeft=Math.floor(diff/60000)+'m';
+      }
+      li.innerHTML=`${user.username} (${user.status}) - ${timeLeft}
+      <button onclick="toggleStatus(${user.id},'liberar')">Liberar</button>
+      <button onclick="toggleStatus(${user.id},'bloquear')">Bloquear</button>
+      <button onclick="deleteUser(${user.id})">Excluir</button>`;
       userList.appendChild(li);
     });
-    saveUsers();
   }
 
-  if(formAdd){
-    formAdd.addEventListener('submit',e=>{
-      e.preventDefault();
-      let u=document.getElementById('new-username').value;
-      let p=document.getElementById('new-password').value;
-      if(users.some(x=>x.username===u)){alert('Usuário já existe');return;}
-      users.push({username:u,password:p,status:'liberado',expires:now()+30*24*60*60*1000});
-      saveUsers();renderUsers();alert('Usuário criado por 30 dias');
-      formAdd.reset();
-    });
-  }
+  window.toggleStatus=(id,action)=>{
+    let u=users.find(x=>x.id===id);
+    if(u){u.status=action==='liberar'?'liberado':'bloqueado'; renderUsers();}
+  };
+  window.deleteUser=(id)=>{users=users.filter(x=>x.id!==id); renderUsers();};
 
-  if(formTrial){
-    formTrial.addEventListener('submit',e=>{
-      e.preventDefault();
-      let u=document.getElementById('trial-username').value;
-      let p=document.getElementById('trial-password').value;
-      if(users.some(x=>x.username===u)){alert('Usuário já existe');return;}
-      users.push({username:u,password:p,status:'liberado',expires:now()+1*60*60*1000});
-      saveUsers();renderUsers();alert('Teste de 1h criado');
-      formTrial.reset();
-    });
-  }
-
-  window.toggleUser=(uname,act)=>{
-    let u=users.find(x=>x.username===uname);
-    if(!u) return;
-    if(act==='liberar'){u.status='liberado';u.expires=now()+30*24*60*60*1000;}
-    if(act==='bloquear'){u.status='bloqueado';}
-    if(act==='excluir'){users=users.filter(x=>x.username!==uname);}
-    saveUsers();renderUsers();
-  }
-
-  if(userList) setInterval(renderUsers,2000);
-
-  // LOGOUT
-  window.logout=()=>{localStorage.removeItem('loggedUser');window.location.href='index.html';}
-
-  // PLAYER
-  const overlay=document.getElementById('video-player-overlay');
-  const player=document.getElementById('video-player');
-  window.openPlayer=el=>{player.src=el.dataset.url;overlay.classList.add('visible');}
-  window.closePlayer=()=>{player.src='';overlay.classList.remove('visible');}
+  // Player
+  window.openPlayer=(el)=>{
+    document.getElementById('video-player').src=el.dataset.url;
+    document.getElementById('video-player-overlay').classList.add('visible');
+  };
+  window.closePlayer=()=>{
+    document.getElementById('video-player').src='';
+    document.getElementById('video-player-overlay').classList.remove('visible');
+  };
 });
