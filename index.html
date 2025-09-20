@@ -1,1 +1,33 @@
-<!DOCTYPE html><html lang="pt-br"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>R Filmes - Login</title><link rel="stylesheet" href="style.css"></head><body><div class="login-box"><h1>R Filmes</h1><form id="login-form"><input id="username" placeholder="Usuário" required><input id="password" type="password" placeholder="Senha" required><button class="btn" type="submit">Entrar</button></form><hr><form id="admin-login-form"><input id="admin-email" placeholder="E-mail admin" required><input id="admin-password" type="password" placeholder="Senha admin" required><button class="btn btn-secondary" type="submit">Entrar Admin</button></form><p style="margin-top:10px"><a class="btn btn-whatsapp" href="https://wa.me/5583988942232?text=Ol%C3%A1,+quero+solicitar+acesso" target="_blank">Solicitar Acesso</a></p></div><script src="script.js"></script></body></html>
+<!doctype html>
+<html lang='pt-br'><head><meta charset='utf-8'/><meta name='viewport' content='width=device-width,initial-scale=1'/>
+<title>R Filmes - Login</title><link rel='stylesheet' href='style.css'></head><body>
+<div class='header'><div class='logo'>R Filmes</div></div><main class='container'>
+<div class='card'><h2>Acesso do Cliente</h2>
+<form id='loginForm'><input id='username' placeholder='Usuário'><input id='password' placeholder='Senha' type='password'><button class='btn' type='submit'>Entrar</button></form></div>
+<div class='card'><h2>Acesso Administrador</h2>
+<form id='adminLoginForm'><input id='adminEmail' placeholder='E-mail Admin'><input id='adminPassword' placeholder='Senha Admin' type='password'><button class='btn' type='submit'>Entrar Admin</button></form></div>
+<div class='card'><a class='btn' href='https://wa.me/5583988942232?text=Ol%C3%A1,+quero+solicitar+acesso' target='_blank'>📲 Solicitar Acesso (WhatsApp)</a></div>
+</main>
+<script src='https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js'></script>
+<script src='https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js'></script>
+<script>
+var firebaseConfig = {"apiKey": "AIzaSyA7899IaZqcyAV2MPfwAM3Ju64UEzU4RNI", "authDomain": "rrfilmes-fad2a.firebaseapp.com", "databaseURL": "https://rrfilmes-fad2a-default-rtdb.firebaseio.com", "projectId": "rrfilmes-fad2a", "storageBucket": "rrfilmes-fad2a.firebasestorage.app", "messagingSenderId": "1060629183423", "appId": "1:1060629183423:web:0b977a3f995b8c65ff7f0a", "measurementId": "G-2NZD2JSSQQ"};
+firebase.initializeApp(firebaseConfig);
+var db = firebase.database();
+const ADMIN_EMAIL = 'costarael87@gmail.com';
+document.getElementById('loginForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var user=document.getElementById('username').value.trim();
+  var pass=document.getElementById('password').value.trim();
+  if(!user||!pass){alert('Preencha');return;}
+  db.ref('usuarios/'+user).get().then(function(snap){
+    if(!snap.exists()){alert('Usuário inválido.');return;}
+    var data=snap.val();var now=new Date();var exp=data.expira?new Date(data.expira):null;
+    if(data.senha===pass&&data.status==='liberado'&&(!exp||exp>now)){sessionStorage.setItem('rfilmes_user',user);window.location='home1.html';}else{alert('Usuário inválido ou bloqueado.');}
+  }).catch(function(err){console.error(err);alert('Erro');});
+});
+document.getElementById('adminLoginForm').addEventListener('submit', function(e){
+  e.preventDefault();var email=document.getElementById('adminEmail').value.trim();var pass=document.getElementById('adminPassword').value.trim();
+  if(email===ADMIN_EMAIL&&pass==='1206israel'){sessionStorage.setItem('rfilmes_admin','1');window.location='admin-panel.html';}else{alert('Credenciais inválidas.');}
+});
+</script></body></html>

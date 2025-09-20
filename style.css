@@ -1,14 +1,14 @@
-
-body{font-family:Arial,Helvetica,sans-serif;background:#0a0a0a;color:#eee;margin:0;padding:0}
-.container{max-width:900px;margin:20px auto;padding:12px}
-.item{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.03)}
-.item img{width:120px;height:70px;object-fit:cover;border-radius:6px;background:#222}
-.item h3{margin:0;font-size:16px}
-.btn{background:#c63c51;color:#fff;padding:8px 12px;border-radius:6px;text-decoration:none}
-.header{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#050012;border-bottom:1px solid rgba(255,255,255,0.03)}
-.logo{font-weight:700}
-.navlinks a{color:#c63c51;text-decoration:none;margin-left:12px}
+:root{ --bg:#040012; --text:#f3f3f3; --primary:#c63c51; --card:rgba(255,255,255,0.04); }
+*{box-sizing:border-box;font-family: Poppins, Arial, sans-serif;}
+body{margin:0;background:var(--bg);color:var(--text)}
+.container{max-width:1000px;margin:18px auto;padding:10px}
+.header{padding:12px 20px;background:#050012}
+.logo{font-weight:700;font-size:20px}
+.card{background:var(--card);padding:14px;border-radius:10px;margin-bottom:12px}
+.filme-item{display:flex;gap:12px;align-items:center;padding:10px;border-bottom:1px solid rgba(255,255,255,0.02)}
+.filme-item img{width:120px;height:72px;object-fit:cover;border-radius:6px;background:#111}
+.filme-item h3{margin:0;font-size:16px}
+.btn{display:inline-block;padding:8px 14px;border-radius:8px;border:none;background:var(--primary);color:#fff;cursor:pointer;text-decoration:none}
 .pager{display:flex;justify-content:center;gap:12px;margin:18px 0}
-.footer{font-size:13px;color:#999;text-align:center;margin:20px 0}
-.login-box{max-width:420px;margin:40px auto;padding:20px;background:rgba(255,255,255,0.02);border-radius:8px;text-align:center}
-input{width:90%;padding:10px;margin:8px 0;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#fff}
+.user-row{padding:8px;border-bottom:1px dashed rgba(255,255,255,0.04);display:flex;justify-content:space-between;align-items:center}
+input,select{width:100%;padding:10px;margin:8px 0;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--text)}
